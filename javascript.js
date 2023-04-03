@@ -1,4 +1,5 @@
-let score = 0;
+let playerScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
     let randomSelector = Math.floor(Math.random()*3);
@@ -52,4 +53,100 @@ function game(){
         console.log("Uh oh, you lost to the AI, which won " + -score + " more times.");
 }
 
-game();
+let typeWriterIncr = 0;
+let typeWriterText = "";
+let typeWriterSpeed = 30;
+
+function typeWriter(elementName, text, reset){
+    let textElement = document.getElementById(elementName);
+
+    if (reset){
+        typeWriterIncr = 0;
+        typeWriterText = text;
+        console.log(text.length);
+    }
+
+    if (typeWriterIncr < typeWriterText.length) {
+        textElement.textContent += text.charAt(typeWriterIncr);
+        typeWriterIncr++;
+        setTimeout(typeWriter, typeWriterSpeed, elementName, text, false);
+    }
+}
+
+function fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0){
+            clearInterval(timer);
+            //element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= 0.1;
+    }, 50);
+}
+
+function unfade(element) {
+    let op = 0;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += 0.1;
+    }, 50);
+}
+
+function calculateTextDelay(text){
+    return text.length * typeWriterSpeed + 500;
+}
+
+let timeStamp = 0;
+
+let introOne = "Amongst all the chimeras created by the scientist von Neumon for his mad menagerie, " +
+                "three beasts reigned supreme...";
+
+let introTwo = "The three beasts countered one another. " +
+                "The Raptor could not scratch the Golem, " +
+                "but easily tore through the Spider-web, " +
+                "whose sticky strands ensnared the Golem.";
+
+let introThree = "Thus arose the game of...";
+/*
+typeWriter("intro", introOne, true);
+
+setTimeout(unfade, calculateTextDelay(introOne) + 500, document.getElementsByClassName("beast-entry").item(0));
+setTimeout(unfade, calculateTextDelay(introOne) + 1500, document.getElementsByClassName("beast-entry").item(1));
+setTimeout(unfade, calculateTextDelay(introOne) + 2500, document.getElementsByClassName("beast-entry").item(2));
+setTimeout(fade, calculateTextDelay(introOne) + 3500, document.getElementById("intro"));
+setTimeout(() => {  document.getElementById("intro").textContent = "";}, calculateTextDelay(introOne) + 5000);
+setTimeout(() => {  document.getElementById("intro").style = 'alpha(opacity=100)';}, calculateTextDelay(introOne) + 5000);
+
+timeStamp = calculateTextDelay(introOne) + 5000;
+
+setTimeout(typeWriter, timeStamp, "intro",
+        introTwo,
+        true);
+
+setTimeout(fade, timeStamp + calculateTextDelay(introTwo) + 1500, document.getElementById("intro"));
+setTimeout(() => {  document.getElementById("intro").textContent = "" }, timeStamp + 3500 + calculateTextDelay(introTwo));
+setTimeout(() => {  document.getElementById("intro").style = "alpha(opacity=100)"}, timeStamp + 3500 + calculateTextDelay(introTwo));
+
+timeStamp = timeStamp + calculateTextDelay(introTwo) + 3500;
+
+setTimeout(typeWriter, timeStamp, "intro",
+        introThree,
+        true);
+
+setTimeout(fade, timeStamp + calculateTextDelay(introThree) + 1500, document.getElementById("intro"));
+setTimeout(() => {  document.getElementById("intro").textContent = "" }, timeStamp + 3500 + calculateTextDelay(introThree));
+setTimeout(unfade, timeStamp + calculateTextDelay(introThree) + 3500, document.getElementById("perm-title"));*/
+
+document.getElementById("perm-title").style = 'alpha(opacity=100)';
+document.getElementsByClassName("beast-entry").item(0).style = 'alpha(opacity=100)';
+document.getElementsByClassName("beast-entry").item(1).style = 'alpha(opacity=100)';
+document.getElementsByClassName("beast-entry").item(2).style = 'alpha(opacity=100)';
+
+//game();
