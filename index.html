@@ -9,20 +9,41 @@
 <body>
     <div id="perm-title" style="opacity: 0">GOLEM - RAPTOR - SPIDER</div>
     <div id="intro"></div>
+    <div id="battleground">
+        <div class="bgContainer">
+            <img id="playerMonster" src = "" height="150" width="auto" draggable="false">
+            <div class="overlay" id="playerOverlay"></div>
+        </div>
+        <h3>vs.</h3>
+        <div class="bgContainer">
+            <img id="AImonster" src = "" height="150" width="auto" draggable="false">
+            <div class="overlay" id="AIOverlay"></div>
+        </div>
+    </div>>
+    <div id="match-result">
+        
     </div>
     <div id="beasts">
         <div class="beast-entry" id="beast-1">
             <h2>The Golem</h2>
-            <button><img src = "images/MonstersAvatarIcons_77.PNG" height="200" width="auto"></button>
+            <img id="Golem" src = "images/Golem.PNG" height="200" width="auto" draggable="false">
         </div>
         <div class="beast-entry" id="beast-2">
             <h2>The Raptor</h2>
-            <button><img src = "images/MonstersAvatarIcons_67.PNG" height="200" width="auto"></button>
+            <img id="Raptor" src = "images/Raptor.PNG" height="200" width="auto" draggable="false">
         </div>
         <div class="beast-entry" id="beast-3">
             <h2>The Spider</h2>
-            <button><img src = "images/MonstersAvatarIcons_78.PNG" height="200" width="auto"></button>
+            <img id="Spider" src = "images/Spider.PNG" height="200" width="auto" draggable="false">
         </div>       
+    </div>
+    <div id="scores">
+        <div id="playerScore">
+            Player: 0
+        </div>
+        <div id="computerScore">
+            Computer: 0
+        </div>
     </div>
 </body>
 </html>

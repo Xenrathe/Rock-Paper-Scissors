@@ -1,61 +1,48 @@
+//
+// GAME-PLAYING LOGIC FUNCTIONS AND VARIABLES
+//
+
 let playerScore = 0;
 let computerScore = 0;
 
 function getComputerChoice() {
     let randomSelector = Math.floor(Math.random()*3);
     if (randomSelector == 0)
-        return "Rock"
+        return "Golem"
     else if (randomSelector == 1)
-        return "Paper"
+        return "Raptor"
     else
-        return "Scissors"
+        return "Spider"
 }
 
 function singleRoundPlay(playerSelection, computerSelection) {
-    //Rock beats paper, paper beats rock, scissors beats paper
 
+    //GOLEM > RAPTOR > SPIDER > GOLEM
     outcomeResult = "lose";
-    if (playerSelection.toLowerCase() == computerSelection.toLowerCase())
+    if (playerSelection == computerSelection)
         outcomeResult = "tie";
-    else if (playerSelection.toLowerCase() == "rock" && computerSelection == "Scissors")
+    else if (playerSelection == "Golem" && computerSelection == "Raptor")
         outcomeResult = "win";
-    else if (playerSelection.toLowerCase() == "paper" && computerSelection == "Rock")
+    else if (playerSelection == "Raptor" && computerSelection == "Spider")
         outcomeResult = "win";
-    else if (playerSelection.toLowerCase() == "scissors" && computerSelection == "Paper")
+    else if (playerSelection == "Spider" && computerSelection == "Golem")
         outcomeResult = "win";
 
-    if (outcomeResult == "tie")
-        return "You Tie! " + playerSelection + " against " + computerSelection + "."
-    else if (outcomeResult == "lose")
-    {
-        score--;
-        return "You Lose! " + playerSelection + " is beat by " + computerSelection + "!"
-    }
-    else
-    {
-        score++;
-        return "You Win! " + playerSelection + " beats " + computerSelection + "!"
-    }
-}
+    if (outcomeResult == "lose")
+        computerScore++;
+    else if (outcomeResult == 'win')
+        playerScore++;
 
-function game(){
-    let numGames = parseInt(prompt("Choose total number of games:"));
-    for (let i = 0; i < numGames; i++){
-        let playerChoice = prompt("Game#" + (i+1) + " - Choose Rock, Paper, or Scissors:");
-        console.log(singleRoundPlay(playerChoice, getComputerChoice()));
-    }
-
-    if (score == 0 )
-        console.log("You tied the computer overall!");
-    else if (score > 0 )
-        console.log("Congratulations, you beat the AI, by winning " + score + " more times!");
-    else
-        console.log("Uh oh, you lost to the AI, which won " + -score + " more times.");
+    return outcomeResult
 }
 
 let typeWriterIncr = 0;
 let typeWriterText = "";
 let typeWriterSpeed = 30;
+
+//
+// DISPLAY/ANIMATION INTRO FUNCTIONS
+//
 
 function typeWriter(elementName, text, reset){
     let textElement = document.getElementById(elementName);
@@ -103,6 +90,57 @@ function calculateTextDelay(text){
     return text.length * typeWriterSpeed + 500;
 }
 
+//
+// INTERACTIVITY/UI FUNCTIONS
+//
+
+function monsterButtonDown(monsterBtn){
+    document.querySelector('#AIOverlay').classList.remove('halfOpacity');
+    document.querySelector('#playerOverlay').classList.remove('halfOpacity');
+
+    monsterBtn.classList.add('pressed');
+    let computerChoice = getComputerChoice();
+    let playerChoice = monsterBtn.getAttribute('id');
+    let result = singleRoundPlay(playerChoice, computerChoice);
+
+    if (result == 'win')
+        document.querySelector('#AIOverlay').classList.add('halfOpacity');
+    else if (result == 'lose')
+        document.querySelector('#playerOverlay').classList.add('halfOpacity');
+
+    document.querySelector('#playerMonster').src = 'images/' + playerChoice + '.PNG';
+    document.querySelector('#AImonster').src = 'images/' + computerChoice + '.PNG';
+
+    let matchText = '';
+    if (result == 'win'){
+        if (playerChoice == 'Golem')
+            matchText = 'Golem crushes Raptor!';
+        else if (playerChoice == 'Raptor')
+            matchText = 'Raptor rends Spider!';
+        else
+            matchText = 'Spider traps Golem!';
+    }
+    else if (result == 'lose')
+    {
+        if (playerChoice == 'Golem')
+            matchText = 'Golem is trapped by Spider!';
+        else if (playerChoice == 'Raptor')
+            matchText = 'Raptor is crushed by Golem!';
+        else
+            matchText = 'Spider is rended by Raptor!';
+    }
+    else
+        matchText = 'Tie!'
+
+    document.querySelector('#match-result').textContent = matchText;
+    document.querySelector('#playerScore').textContent = 'Player: ' + playerScore;
+    document.querySelector('#computerScore').textContent = 'Computer: ' + computerScore;
+}
+
+function monsterButtonUp(monsterBtn){
+    monsterBtn.classList.remove('pressed');
+}
+
 let timeStamp = 0;
 
 let introOne = "Amongst all the chimeras created by the scientist von Neumon for his mad menagerie, " +
@@ -144,9 +182,12 @@ setTimeout(fade, timeStamp + calculateTextDelay(introThree) + 1500, document.get
 setTimeout(() => {  document.getElementById("intro").textContent = "" }, timeStamp + 3500 + calculateTextDelay(introThree));
 setTimeout(unfade, timeStamp + calculateTextDelay(introThree) + 3500, document.getElementById("perm-title"));*/
 
-document.getElementById("perm-title").style = 'alpha(opacity=100)';
-document.getElementsByClassName("beast-entry").item(0).style = 'alpha(opacity=100)';
-document.getElementsByClassName("beast-entry").item(1).style = 'alpha(opacity=100)';
-document.getElementsByClassName("beast-entry").item(2).style = 'alpha(opacity=100)';
-
-//game();
+document.getElementById('intro').style.height = 0;
+document.getElementById("perm-title").style.opacity = 100;
+const monsterBtns = document.getElementsByClassName("beast-entry");
+for (let j = 0; j < monsterBtns.length; j++){
+    monsterBtns.item(j).style.opacity = 100;
+    let img = monsterBtns.item(j).getElementsByTagName('img')[0];
+    img.onmousedown = () => monsterButtonDown(img);
+    img.onmouseup = () => monsterButtonUp(img);
+}
