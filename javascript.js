@@ -151,8 +151,8 @@ let introTwo = "The three beasts countered one another. " +
                 "but easily tore through the Spider-web, " +
                 "whose sticky strands ensnared the Golem.";
 
-let introThree = "Thus arose the game of...";
-/*
+let introThree = "Many years hence, children created a game involving these three beasts, a game called...";
+
 typeWriter("intro", introOne, true);
 
 setTimeout(unfade, calculateTextDelay(introOne) + 500, document.getElementsByClassName("beast-entry").item(0));
@@ -180,14 +180,20 @@ setTimeout(typeWriter, timeStamp, "intro",
 
 setTimeout(fade, timeStamp + calculateTextDelay(introThree) + 1500, document.getElementById("intro"));
 setTimeout(() => {  document.getElementById("intro").textContent = "" }, timeStamp + 3500 + calculateTextDelay(introThree));
-setTimeout(unfade, timeStamp + calculateTextDelay(introThree) + 3500, document.getElementById("perm-title"));*/
+setTimeout(unfade, timeStamp + calculateTextDelay(introThree) + 3500, document.getElementById("perm-title"));
 
-document.getElementById('intro').style.height = 0;
-document.getElementById("perm-title").style.opacity = 100;
-const monsterBtns = document.getElementsByClassName("beast-entry");
-for (let j = 0; j < monsterBtns.length; j++){
-    monsterBtns.item(j).style.opacity = 100;
-    let img = monsterBtns.item(j).getElementsByTagName('img')[0];
-    img.onmousedown = () => monsterButtonDown(img);
-    img.onmouseup = () => monsterButtonUp(img);
-}
+timeStamp = timeStamp + calculateTextDelay(introThree) + 3500;
+
+setTimeout(() => {
+    document.getElementById('intro').style.height = 0;
+    const monsterBtns = document.getElementsByClassName("beast-entry");
+    for (let j = 0; j < monsterBtns.length; j++){
+        monsterBtns.item(j).style.opacity = 100;
+        let img = monsterBtns.item(j).getElementsByTagName('img')[0];
+        img.onmousedown = () => monsterButtonDown(img);
+        img.onmouseup = () => monsterButtonUp(img);
+    }
+    document.getElementById('battleground-hide').id = 'battleground';
+    document.getElementById('scores').style.opacity = 100;
+    document.getElementById('vs').textContent = "vs.";
+}, timeStamp + 2000);

@@ -23,29 +23,38 @@ body {
 }
 
 #perm-title {
-    height: 100px;   
+    height: 60px;   
     font-size: 40px;  
     text-align: center;
     margin-top: 50px;
 }
 
 #intro {
-    height: 300px;
+    height: 220px;
+    max-height: 300px;
     margin: 0px 100px;
 }
 
-#battleground, #match-result {
+#battleground-hide,#battleground, #match-result {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
 }
 
-#battleground {
-    height: 170px;
+#battleground, #battleground-hide {
     gap: 30px;
     margin-bottom: 0px;
+}
+
+#battleground-hide {
+    margin-top: 0px; /*Eventually becomes 50px*/
+    height: 0px; /*Eventually becomes 170px*/
+}
+
+#battleground {
     margin-top: 50px;
+    height: 170px;
 }
 
 #match-result{
@@ -147,4 +156,5 @@ img.pressed {
     gap: 45px;
     font-size: 50px;
     margin-top: 20px;
+    opacity: 0;
 }
